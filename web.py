@@ -5,15 +5,15 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    homepage = "<h1>陳宜琳Python網頁</h1>"
-    homepage += "<a href='/mis'>MIS</a><br>"
-    homepage += "<a href='/today'>顯示日期時間</a><br>"
-    homepage += "<a href='/welcome?nick=tcyang'>傳送使用者暱稱</a><br>"
-    homepage += "<a href='/account'>網頁表單傳值</a><br>"
-    homepage += "<a href='/about'>宜琳簡介網頁</a><br>"
-    # 新增計算機功能超連結
-    homepage += "<a href='/calc'>網頁版計算機</a><br>" 
-    return homepage
+link = "<h1>歡迎進入陳宜琳的網站首頁</h1>"
+    link += "<a href=/mis>課程</a><hr>"
+    link += "<a href=/today>今天日期</a><hr>"
+    link += "<a href=/about>關於宜琳</a><hr>"
+    link += "<a href=/welcome?u=宜琳&dep=靜宜資管>GET傳值</a><hr>"
+    link += "<a href=/account>POST傳值(帳號密碼)</a><hr>"
+    link += "<a href=/math>數學運算</a><hr>"
+    return link
+
 
 @app.route("/mis")
 def course():
@@ -22,9 +22,9 @@ def course():
 @app.route("/today")
 def today():
     now = datetime.now()
-    year = str(now.year) # 取得年份
-    month = str(now.month) # 取得月份
-    day = str(now.day) # 取得日期
+    year = str(now.year)
+    month = str(now.month)
+    day = str(now.day)
     now_str = year + "/" + month + "/" + day
     return render_template("today.html", datetime=now_str)
 
@@ -43,7 +43,8 @@ def account():
     if request.method == "POST":
         user = request.form["user"]
         pwd = request.form["pwd"]
-        result = "您輸入的帳號是：" + user + "；密碼為：" + pwd 
+        # 使用 f-string 讓字串拼接更乾淨
+        result = f"您輸入的帳號是：{user}；密碼為：{pwd}" 
         return result
     else:
         return render_template("account.html")
