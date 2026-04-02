@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>數學運算</title>
+</head>
+<body>
+    <h1>進行數學運算</h1>
+    
+    <form method="POST" action="/math">
+        <label for="x">X：</label>
+        <input type="text" name="x" id="x" value="{{ x if x is not none else '' }}">
+        
+        <label for="opt">運算符號：</label>
+        <select name="opt" id="opt">
+            <option value="+" {% if opt == '+' %}selected{% endif %}>+</option>
+            <option value="-" {% if opt == '-' %}selected{% endif %}>-</option>
+            <option value="*" {% if opt == '*' %}selected{% endif %}>*</option>
+            <option value="/" {% if opt == '/' %}selected{% endif %}>/</option>
+            <option value="%" {% if opt == '%' %}selected{% endif %}>%</option>
+        </select>
+        
+        <label for="y">Y：</label>
+        <input type="text" name="y" id="y" value="{{ y if y is not none else '' }}">
+        
+        <input type="submit" value="計算">
+    </form>
+
+    <hr>
+
+    {% if error_msg %}
+        <h3 style="color: red;">{{ error_msg }}</h3>
+    {% endif %}
+
+    {% if Result is not none %}
+        <h3 style="color: blue;">計算結果： {{ x }} {{ opt }} {{ y }} = {{ Result }}</h3>
+    {% endif %}
+
+    <br>
+    <a href="/">回首頁</a>
+</body>
+</html>
